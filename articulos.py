@@ -3,14 +3,14 @@ import sqlite3
 class Articulos:
 
     def abrir(self):
-        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/Dev Projects/Python with sqlite/mi_database.db")
+        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/CODIGO/uStock/mi_database.db")
         return conexion
 
 
     def alta(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
-        sql="insert into articulos(descripcion, bolsa ,precio) values (?,?,?)"
+        sql="insert into articulos(descripcion,talle, precio ,bolsa) values (?,?,?,?)"
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
@@ -29,7 +29,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="select codigo, descripcion, precio from articulos"
+            sql="select * from articulos"
             cursor.execute(sql)
             return cursor.fetchall()
         finally:

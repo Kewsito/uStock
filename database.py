@@ -8,6 +8,7 @@ def crear_tabla(nombre_db):
         CREATE TABLE articulos(
             id INTEGER PRIMARY KEY NOT NULL,
             descripcion TEXT NOT NULL,
+            talle TEXT NOT NULL,
             bolsa TEXT NOT NULL,
             precio DECIMAL NOT NULL
         )
