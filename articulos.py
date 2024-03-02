@@ -10,7 +10,7 @@ class Articulos:
     def alta(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
-        sql="insert into articulos(descripcion,talle, precio ,bolsa) values (?,?,?,?)"
+        sql="insert into articulos(descripcion,marca ,talle, precio ,bolsa) values (?,?,?,?,?)"
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()

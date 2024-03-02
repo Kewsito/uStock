@@ -5,9 +5,10 @@ def crear_tabla(nombre_db):
     cursor = conexion.cursor()
 
     cursor.execute('''
-        CREATE TABLE articulos(
+        CREATE TABLE IF NOT EXISTS articulos(
             id INTEGER PRIMARY KEY NOT NULL,
             descripcion TEXT NOT NULL,
+            marca TEXT,
             talle TEXT NOT NULL,
             bolsa TEXT NOT NULL,
             precio DECIMAL NOT NULL
@@ -18,7 +19,3 @@ def crear_tabla(nombre_db):
     conexion.close()
 
 
-if __name__ == '__main__':
-    
-    crear_tabla("mi_database.db")
-    
