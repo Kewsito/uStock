@@ -12,6 +12,7 @@ class FormularioArticulos:
         self.cuaderno1 = ttk.Notebook(self.ventana1)        
         self.carga_articulos()
         self.listado_completo()
+        self.modificar()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -87,7 +88,35 @@ class FormularioArticulos:
             self.scrolledtext1.insert(tk.END, "Código:"+str(fila[0])+"\nDescripción:"+fila[1]+"\nMarca:"+fila[2]+"\nTalle:"+str(fila[3])+"\nBolsa:"+str(fila[4])+"\nPrecio:"+str(fila[5])+"\n")
             self.scrolledtext1.insert(tk.END, "-"*50+"\n")
             
+    def modificar(self):
+        self.pagina2 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina2, text="Modificar precio segun codigo")
+        self.labelframe2=ttk.LabelFrame(self.pagina2, text="Artículo")
+        self.labelframe2.grid(column=0, row=0, padx=5, pady=10)
+        # Código label
+        self.label5=ttk.Label(self.labelframe2, text="Código:")
+        self.label5.grid(column=0, row=0, padx=4, pady=4)
+        # Código entry
+        self.codigomod=tk.StringVar()
+        self.entrycodigo=ttk.Entry(self.labelframe2, textvariable=self.codigomod)
+        self.entrycodigo.grid(column=1, row=0, padx=4, pady=4)
+        # Nuevo precio label
+        self.label6=ttk.Label(self.labelframe2, text="Nuevo precio:")
+        self.label6.grid(column=0, row=1, padx=4, pady=4)
+        # Nuevo precio entry
+        self.nuevoprecio=tk.StringVar()
+        self.entrynuevoprecio=ttk.Entry(self.labelframe2, textvariable=self.nuevoprecio)
+        self.entrynuevoprecio.grid(column=1, row=1, padx=4, pady=4)
+        # Boton
+        self.boton2=ttk.Button(self.labelframe2, text="Modificar", command=self.modificar_precio)
+        self.boton2.grid(column=1, row=2, padx=4, pady=4)
 
+    def modificar_precio(self):
+        datos = (self.nuevoprecio.get(), self.codigomod.get())
+        self.articulo1.modificar_precio(datos)
+        mb.showinfo("Información", "El precio ha sido modificado")
+        self.codigomod.set("")
+        self.nuevoprecio.set("")
 if __name__ == '__main__':
     database.crear_tabla("mi_database.db")
     aplicacion1=FormularioArticulos()

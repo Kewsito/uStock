@@ -3,7 +3,7 @@ import sqlite3
 class Articulos:
 
     def abrir(self):
-        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/CODIGO/uStock/mi_database.db")
+        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/Dev Projects/Python with sqlite/mi_database.db")
         return conexion
 
 
@@ -34,3 +34,11 @@ class Articulos:
             return cursor.fetchall()
         finally:
             cone.close()
+    
+    def modificar_precio(self, datos):
+        cone = self.abrir()
+        cursor = cone.cursor()
+        sql = "update articulos set precio=? where id=?"
+        cursor.execute(sql, datos)
+        cone.commit()
+        cone.close()
