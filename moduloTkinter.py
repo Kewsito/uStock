@@ -13,6 +13,7 @@ class FormularioArticulos:
         self.carga_articulos()
         self.listado_completo()
         self.modificar()
+        self.mostrar_detalles()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -114,9 +115,37 @@ class FormularioArticulos:
     def modificar_precio(self):
         datos = (self.nuevoprecio.get(), self.codigomod.get())
         self.articulo1.modificar_precio(datos)
-        mb.showinfo("Información", "El precio ha sido modificado")
+        mb.showinfo("Información", "El articulo  ha sido modificado")
         self.codigomod.set("")
         self.nuevoprecio.set("")
+
+    def mostrar_detalles(self):
+        self.pagina4 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina4, text="Detalles del producto")
+        self.labelframe4 = ttk.LabelFrame(self.pagina4, text="Artículo")
+        self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
+        # Código label
+        self.label7 = ttk.Label(self.labelframe4, text="Código:")
+        self.label7.grid(column=0, row=0, padx=4, pady=4)
+        # Código entry
+        self.codigo_det = tk.StringVar()
+        self.entrycodigo_det = ttk.Entry(self.labelframe4, textvariable=self.codigo_det)
+        self.entrycodigo_det.grid(column=1, row=0, padx=4, pady=4)
+        # Boton
+        self.boton3 = ttk.Button(self.labelframe4, text="Mostrar detalles", command=self.mostrar_detalles_producto)
+        self.boton3.grid(column=1, row=1, padx=4, pady=4)
+
+    def mostrar_detalles_producto(self):
+        codigo = self.codigo_det.get()
+        detalles = self.articulo1.detalles_producto(codigo)
+        if detalles is not None and len(detalles) <= 6:
+            self.scrolledtext2 = st.ScrolledText(self.labelframe4, width=50, height=10)
+            self.scrolledtext2.grid(column=0, row=2, columnspan=2, padx=10, pady=10)
+            self.scrolledtext2.insert(tk.END,"Descripción:" + str(detalles[0][1]) + "\nMarca:" + detalles[0][2] + "\nTalle:" + str(detalles[0][3]) + "\nBolsa:" + str(detalles[0][4]) + "\nPrecio:" + str(detalles[0][5]) + "\n")
+        else:
+            mb.showinfo("Información", "No se encontró ningún producto con ese código o los detalles del producto son insuficientes")
+
+
 if __name__ == '__main__':
     database.crear_tabla("mi_database.db")
     aplicacion1=FormularioArticulos()

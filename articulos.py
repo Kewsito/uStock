@@ -3,9 +3,13 @@ import sqlite3
 class Articulos:
 
     def abrir(self):
-        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/Dev Projects/Python with sqlite/mi_database.db")
+        conexion=sqlite3.connect("C:/Users/Kewsito/Desktop/CODIGO/uStock/mi_database.db")
+        print(conexion)
+        if conexion!=None:
+            print("Conexión establecida")
+        else:
+            print("Conexión no establecida")
         return conexion
-
 
     def alta(self, datos):
         cone=self.abrir()
@@ -19,7 +23,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="select descripcion, precio from articulos where codigo=?"
+            sql="select descripcion, precio from articulos where id=?"
             cursor.execute(sql, datos)
             return cursor.fetchall()
         finally:
@@ -42,3 +46,14 @@ class Articulos:
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
+    
+    def detalles_producto(self, id):
+        try:
+            cone = self.abrir()
+            
+            cursor = cone.cursor()
+            sql = "select * from articulos where id=?"
+            cursor.execute(sql, (id,))
+            return cursor.fetchall()
+        finally:
+            cone.close()
